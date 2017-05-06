@@ -32,9 +32,9 @@
             };
 
             if(navigator.getUserMedia) {
-            navigator.getUserMedia(constraints, getUserMediaSuccess, getUserMediaError);
+              navigator.getUserMedia(constraints, getUserMediaSuccess, getUserMediaError);
             } else {
-            alert('Your browser does not support getUserMedia API');
+              alert('Your browser does not support getUserMedia API');
             }
          };
 
@@ -96,7 +96,13 @@
                     }
                 });
             } else if(signal.ice) {
-                peerConnection.addIceCandidate(new RTCIceCandidate(signal.ice));
+                peerConnection.addIceCandidate(new RTCIceCandidate(signal.ice))
+                  .then(_ => {
+                    console.log("successfully added ice candidate");
+                  }).catch(e=>{
+                  console.log("Error: Failure during addIceCandidate()");
+                  console.log(e);
+                });
             }
          }
 
